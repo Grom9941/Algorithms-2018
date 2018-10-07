@@ -2,6 +2,10 @@ package lesson1;
 
 import kotlin.NotImplementedError;
 
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class JavaTasks {
     /**
@@ -32,8 +36,41 @@ public class JavaTasks {
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public void sortTimes(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortTimes(String inputName, String outputName) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        List<Integer> list = new ArrayList<>();
+        String line;
+        Integer number = 0;
+        while ((line = reader.readLine()) != null) {
+            for ( String split : line.split(":")){
+                number = number*60 + Integer.parseInt(split);
+            }
+            list.add(number);
+            number = 0;
+            }
+        reader.close();
+
+        int[] array = list.stream().mapToInt(i -> i).toArray();
+
+        Sorts.quickSort(array);
+
+        int second,minute,hour;
+        String s,m,h;
+        FileWriter writer = new FileWriter(outputName);
+
+        for (Integer i : array) {
+            hour = i/3600;
+            h = String.valueOf(hour);
+            if (hour<10) h = "0" + h;
+            minute = (i - 3600*hour)/60;
+            m = String.valueOf(minute);
+            if (minute<10) m = "0" + m;
+            second = i - (hour*3600) - (minute*60);
+            s = String.valueOf(second);
+            if (second<10) s = "0" + s;
+            writer.write(h + ":" + m + ":" + s +"\n");
+        }
+        writer.close();
     }
 
     /**
