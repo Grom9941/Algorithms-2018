@@ -122,7 +122,6 @@ public class JavaTasks {
                 }
         }
         FileWriter writer = new FileWriter(outputName);
-
         for (String i : list) {
             writer.write(i +"\n");
         }
