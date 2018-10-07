@@ -1,9 +1,8 @@
 package lesson1;
 
-import kotlin.NotImplementedError;
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -42,9 +41,12 @@ public class JavaTasks {
         String line;
         Integer number = 0;
         while ((line = reader.readLine()) != null) {
+            if (line.split(":").length != 3) throw new IllegalArgumentException();
             for ( String split : line.split(":")){
+                if (split.length()!=2) throw new IllegalArgumentException();
                 number = number*60 + Integer.parseInt(split);
             }
+            if (number>87900) throw new IllegalArgumentException();
             list.add(number);
             number = 0;
             }
@@ -66,7 +68,7 @@ public class JavaTasks {
             m = String.valueOf(minute);
             if (minute<10) m = "0" + m;
             second = i - (hour*3600) - (minute*60);
-            s = String.valueOf(second);
+            s = String.valueOf(second   );
             if (second<10) s = "0" + s;
             writer.write(h + ":" + m + ":" + s +"\n");
         }
@@ -99,8 +101,32 @@ public class JavaTasks {
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public void sortAddresses(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortAddresses(String inputName, String outputName) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        List<String> list = new ArrayList<>();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            if (line.split(" ").length != 5 || line.split(" - ").length != 2 ||
+                    !line.split(" ")[4].matches("[-+]?\\d+")) throw new IllegalArgumentException();
+
+            list.add(line.split(" - ")[1] + " - " + line.split(" - ")[0]);
+        }
+        reader.close();
+
+        Collections.sort(list);
+        for (int i = 0;i<list.size()-1;i++){
+                while ((i+1 <= list.size()-1) &&(list.get(i).split("-")[0].equals(list.get(i + 1).split("-")[0]))) {
+                    list.set(i, list.get(i) + "," + list.get(i + 1).split("-")[1]);
+                    list.remove(i+1);
+                }
+        }
+        FileWriter writer = new FileWriter(outputName);
+
+        for (String i : list) {
+            writer.write(i +"\n");
+        }
+        writer.close();
     }
 
     /**
@@ -133,8 +159,23 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
-    static public void sortTemperatures(String inputName, String outputName) {
-        throw new NotImplementedError();
+    static public void sortTemperatures(String inputName, String outputName) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        List<Double> list = new ArrayList<>();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            list.add(Double.parseDouble(line));
+        }
+        reader.close();
+
+        Collections.sort(list);
+        FileWriter writer = new FileWriter(outputName);
+
+        for (Double i : list) {
+            writer.write(i +"\n");
+        }
+        writer.close();
     }
 
     /**
@@ -167,7 +208,7 @@ public class JavaTasks {
      * 2
      */
     static public void sortSequence(String inputName, String outputName) {
-        throw new NotImplementedError();
+
     }
 
     /**
@@ -185,6 +226,11 @@ public class JavaTasks {
      * Результат: second = [1 3 4 9 9 13 15 20 23 28]
      */
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
-        throw new NotImplementedError();
+
+//        for (int i = 0; i<first.length;i++){
+//            second[i] = first[i];
+//        }
+//
+//        Sorts.insertionSort(second);
     }
 }
