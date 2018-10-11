@@ -3,7 +3,11 @@ package lesson2;
 import kotlin.NotImplementedError;
 import kotlin.Pair;
 
-import java.util.Set;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class JavaAlgorithms {
@@ -31,9 +35,42 @@ public class JavaAlgorithms {
      *
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName) {
-        throw new NotImplementedError();
+    static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName) throws IOException {
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        List<Integer> list = new ArrayList<>();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            list.add(Integer.parseInt(line));
+        }
+        reader.close();
+        List<Integer> delta = new ArrayList<>();
+        for (int i=0;i<list.size()-1;i++) {
+            delta.add(list.get(i+1)-list.get(i));
+        }
+
+        Integer maxcurrent =0,maxglobal = 0,number1 = list.get(0), number2=0,i1=0,i2=0;
+        Integer icon,jcon = null;
+        for (int x = 0 ;x<delta.size()-1;x++) {
+            maxcurrent = Math.max(delta.get(x),maxcurrent+delta.get(x));
+            if (maxcurrent > maxglobal) {
+                maxglobal = maxcurrent;
+                jcon = x+2;
+            }
+        }
+        icon=jcon;
+        Integer per=2;
+        while(maxglobal!=0) {
+            maxglobal-=delta.get(jcon-per);
+            per++;
+            icon-=1;
+        }
+
+        return new Pair<>(icon,jcon);
+
     }
+
 
     /**
      * Задача Иосифа Флафия.
@@ -82,7 +119,9 @@ public class JavaAlgorithms {
      * Х х Х
      */
     static public int josephTask(int menNumber, int choiceInterval) {
-        throw new NotImplementedError();
+        int res=0;
+        for (int i=1;i<=menNumber;i++) res=(res+choiceInterval)%i;
+        return res+1;
     }
 
     /**
@@ -96,8 +135,49 @@ public class JavaAlgorithms {
      * Если имеется несколько самых длинных общих подстрок одной длины,
      * вернуть ту из них, которая встречается раньше в строке first.
      */
-    static public String longestCommonSubstring(String firs, String second) {
-        throw new NotImplementedError();
+    static public String longestCommonSubstring(String first, String second) {
+        List<Integer> listfrist = new ArrayList<>();
+        Integer max=0,j1 = null;
+        for (int j=0;j<second.length();j++){
+            if(first.charAt(0)==second.charAt(j)){
+                listfrist.add(j,1);
+            } else {
+                listfrist.add(j,0);
+            }
+            if (max<listfrist.get(j)) {
+                max=listfrist.get(j);
+                j1=j;
+            }
+        }
+        Integer previous=-1,previushelper;
+
+            for (int i=1;i<first.length();i++){
+            for (int j=0;j<second.length();j++){
+                previushelper=listfrist.get(j);
+                if (first.charAt(i)==second.charAt(j)) {
+                    if (j != 0) {
+                        listfrist.set(j, previous + 1);
+                    } else {
+                        listfrist.set(0, 0);
+                    }
+                } else {
+                    listfrist.set(j,0);
+                }
+                    previous=previushelper;
+                    if (max<listfrist.get(j)) {
+                        max=listfrist.get(j);
+                        j1=j;
+                    }
+            }
+        }
+        if (max==0) return "";
+            StringBuilder s = new StringBuilder();
+            Integer k =j1-max+1;
+            while (k<=j1){
+                s.append(second.charAt(k));
+                k++;
+            }
+            return s.toString();
     }
 
     /**
