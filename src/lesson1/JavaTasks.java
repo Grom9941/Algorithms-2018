@@ -227,6 +227,7 @@ public class JavaTasks {
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
 
         Integer secondi = first.length, secondi2 = 0;
+        
         for (T aFirst : first) {
             while (aFirst.compareTo(second[secondi]) > 0) {
                 second[secondi2] = second[secondi];
