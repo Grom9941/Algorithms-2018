@@ -37,38 +37,38 @@ public class JavaAlgorithms {
      */
     static public Pair<Integer, Integer> optimizeBuyAndSell(String inputName) throws IOException {
 
-        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-        List<Integer> list = new ArrayList<>();
-        String line;
-
-        while ((line = reader.readLine()) != null) {
-            list.add(Integer.parseInt(line));
-        }
-        reader.close();
-        List<Integer> delta = new ArrayList<>();
-        for (int i=0;i<list.size()-1;i++) {
-            delta.add(list.get(i+1)-list.get(i));
-        }
-
-        Integer maxcurrent =0,maxglobal = 0,number1 = list.get(0), number2=0,i1=0,i2=0;
-        Integer icon,jcon = null;
-        for (int x = 0 ;x<delta.size()-1;x++) {
-            maxcurrent = Math.max(delta.get(x),maxcurrent+delta.get(x));
-            if (maxcurrent > maxglobal) {
-                maxglobal = maxcurrent;
-                jcon = x+2;
-            }
-        }
-        icon=jcon;
-        Integer per=2;
-        while(maxglobal!=0) {
-            maxglobal-=delta.get(jcon-per);
-            per++;
-            icon-=1;
-        }
-
-        return new Pair<>(icon,jcon);
-
+//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+//        List<Integer> list = new ArrayList<>();
+//        String line;
+//
+//        while ((line = reader.readLine()) != null) {
+//            list.add(Integer.parseInt(line));
+//        }
+//        reader.close();
+//        List<Integer> delta = new ArrayList<>();
+//        for (int i=0;i<list.size()-1;i++) {
+//            delta.add(list.get(i+1)-list.get(i));
+//        }
+//
+//        Integer maxcurrent =0,maxglobal = 0,number1 = list.get(0), number2=0,i1=0,i2=0;
+//        Integer icon,jcon = null;
+//        for (int x = 0 ;x<delta.size()-1;x++) {
+//            maxcurrent = Math.max(delta.get(x),maxcurrent+delta.get(x));
+//            if (maxcurrent > maxglobal) {
+//                maxglobal = maxcurrent;
+//                jcon = x+2;
+//            }
+//        }
+//        icon=jcon;
+//        Integer per=2;
+//        while(maxglobal!=0) {
+//            maxglobal-=delta.get(jcon-per);
+//            per++;
+//            icon-=1;
+//        }
+//
+//        return new Pair<>(icon,jcon);
+        throw new NotImplementedError();
     }
 
 
@@ -118,7 +118,11 @@ public class JavaAlgorithms {
      * Х   Х
      * Х х Х
      */
+
+    // Трудоемкость O(menNumber)
+    // Ресурсоемкость O(1)
     static public int josephTask(int menNumber, int choiceInterval) {
+        if (menNumber<=0 || choiceInterval<=0) return -1;
         int res=0;
         for (int i=1;i<=menNumber;i++) res=(res+choiceInterval)%i;
         return res+1;
@@ -135,6 +139,9 @@ public class JavaAlgorithms {
      * Если имеется несколько самых длинных общих подстрок одной длины,
      * вернуть ту из них, которая встречается раньше в строке first.
      */
+
+    // Трудоемкость O(first.length() * second.length())
+    // Ресурсоемкость O(second.length())
     static public String longestCommonSubstring(String first, String second) {
         List<Integer> listfrist = new ArrayList<>();
         Integer max=0,j1 = null;
@@ -220,22 +227,7 @@ public class JavaAlgorithms {
      * В файле буквы разделены пробелами, строки -- переносами строк.
      * Остальные символы ни в файле, ни в словах не допускаются.
      */
-    static public Set<String> baldaSearcher(String inputName, Set<String> words) throws IOException {
-//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-//        List<String> list = new ArrayList<>();
-//        String line;
-//
-//        while ((line = reader.readLine()) != null) {
-//            for (String str : line.split(" ")){
-//                list.add(str);
-//            }
-//        }
-//        reader.close();
-//
-//        for (String string: words) {
-//            List<Integer> listworld = new ArrayList<>();
-//
-//        }
+    static public Set<String> baldaSearcher(String inputName, Set<String> words) {
         throw new NotImplementedError();
     }
 }

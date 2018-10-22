@@ -2,6 +2,7 @@ package lesson2
 
 import java.io.BufferedWriter
 import java.io.File
+import java.lang.IllegalArgumentException
 import java.util.*
 import kotlin.test.assertEquals
 
@@ -61,6 +62,9 @@ abstract class AbstractAlgorithmsTests {
     }
 
     fun josephTask(josephTask: (Int, Int) -> Int) {
+        assertEquals(-1,josephTask(0, 0))
+        assertEquals(-1,josephTask(-3, 10))
+        assertEquals(-1,josephTask(22, -2))
         assertEquals(1, josephTask(1, 1))
         assertEquals(2, josephTask(2, 1))
         assertEquals(50000000, josephTask(50000000, 1))
