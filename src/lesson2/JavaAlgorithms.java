@@ -220,7 +220,22 @@ public class JavaAlgorithms {
      * В файле буквы разделены пробелами, строки -- переносами строк.
      * Остальные символы ни в файле, ни в словах не допускаются.
      */
-    static public Set<String> baldaSearcher(String inputName, Set<String> words) {
+    static public Set<String> baldaSearcher(String inputName, Set<String> words) throws IOException {
+//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+//        List<String> list = new ArrayList<>();
+//        String line;
+//
+//        while ((line = reader.readLine()) != null) {
+//            for (String str : line.split(" ")){
+//                list.add(str);
+//            }
+//        }
+//        reader.close();
+//
+//        for (String string: words) {
+//            List<Integer> listworld = new ArrayList<>();
+//
+//        }
         throw new NotImplementedError();
     }
 }

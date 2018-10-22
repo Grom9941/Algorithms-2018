@@ -36,43 +36,43 @@ public class JavaTasks {
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
     static public void sortTimes(String inputName, String outputName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-        List<Integer> list = new ArrayList<>();
-        String line;
-        Integer number = 0;
-        while ((line = reader.readLine()) != null) {
-            if (line.split(":").length != 3) throw new IllegalArgumentException();
-            for (String split : line.split(":")) {
-                if (split.length() != 2) throw new IllegalArgumentException();
-                number = number * 60 + Integer.parseInt(split);
-            }
-            if (number > 87900) throw new IllegalArgumentException();
-            list.add(number);
-            number = 0;
-        }
-        reader.close();
-
-        int[] array = list.stream().mapToInt(i -> i).toArray();
-
-        Sorts.quickSort(array);
-
-        int second, minute, hour;
-        String s, m, h;
-        FileWriter writer = new FileWriter(outputName);
-
-        for (Integer i : array) {
-            hour = i / 3600;
-            h = String.valueOf(hour);
-            if (hour < 10) h = "0" + h;
-            minute = (i - 3600 * hour) / 60;
-            m = String.valueOf(minute);
-            if (minute < 10) m = "0" + m;
-            second = i - (hour * 3600) - (minute * 60);
-            s = String.valueOf(second);
-            if (second < 10) s = "0" + s;
-            writer.write(h + ":" + m + ":" + s + "\n");
-        }
-        writer.close();
+//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+//        List<Integer> list = new ArrayList<>();
+//        String line;
+//        Integer number = 0;
+//        while ((line = reader.readLine()) != null) {
+//            if (line.split(":").length != 3) throw new IllegalArgumentException();
+//            for (String split : line.split(":")) {
+//                if (split.length() != 2) throw new IllegalArgumentException();
+//                number = number * 60 + Integer.parseInt(split);
+//            }
+//            if (number > 87900) throw new IllegalArgumentException();
+//            list.add(number);
+//            number = 0;
+//        }
+//        reader.close();
+//
+//        int[] array = list.stream().mapToInt(i -> i).toArray();
+//
+//        Sorts.quickSort(array);
+//
+//        int second, minute, hour;
+//        String s, m, h;
+//        FileWriter writer = new FileWriter(outputName);
+//
+//        for (Integer i : array) {
+//            hour = i / 3600;
+//            h = String.valueOf(hour);
+//            if (hour < 10) h = "0" + h;
+//            minute = (i - 3600 * hour) / 60;
+//            m = String.valueOf(minute);
+//            if (minute < 10) m = "0" + m;
+//            second = i - (hour * 3600) - (minute * 60);
+//            s = String.valueOf(second);
+//            if (second < 10) s = "0" + s;
+//            writer.write(h + ":" + m + ":" + s + "\n");
+//        }
+//        writer.close();
     }
 
     /**
@@ -101,6 +101,9 @@ public class JavaTasks {
      * <p>
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
+
+    // Трудоемкость O(n*log(n))
+    // Ресурсоемкость O(n)
     static public void sortAddresses(String inputName, String outputName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputName));
         List<String> list = new ArrayList<>();
@@ -108,13 +111,14 @@ public class JavaTasks {
 
         while ((line = reader.readLine()) != null) {
             if (line.split(" ").length != 5 || line.split(" - ").length != 2 ||
-                    !line.split(" ")[4].matches("[-+]?\\d+")) throw new IllegalArgumentException();
+                    !line.split(" ")[4].matches("[+]?\\d+")) throw new IllegalArgumentException();
 
             list.add(line.split(" - ")[1] + " - " + line.split(" - ")[0]);
         }
         reader.close();
 
         Collections.sort(list);
+
         for (int i = 0; i < list.size() - 1; i++) {
             while ((i + 1 <= list.size() - 1) && (list.get(i).split("-")[0].equals(list.get(i + 1).split("-")[0]))) {
                 list.set(i, list.get(i) + "," + list.get(i + 1).split("-")[1]);
@@ -158,6 +162,9 @@ public class JavaTasks {
      * 99.5
      * 121.3
      */
+
+    // Трудоемкость O(n*log(n))
+    // Ресурсоемкость O(n)
     static public void sortTemperatures(String inputName, String outputName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(inputName));
         List<Double> list = new ArrayList<>();
@@ -226,16 +233,16 @@ public class JavaTasks {
      */
     static <T extends Comparable<T>> void mergeArrays(T[] first, T[] second) {
 
-        Integer secondi = first.length, secondi2 = 0;
-        
-        for (T aFirst : first) {
-            while (aFirst.compareTo(second[secondi]) > 0) {
-                second[secondi2] = second[secondi];
-                secondi++;
-                secondi2++;
-            }
-            second[secondi2] = aFirst;
-            secondi2++;
-        }
+//        Integer secondi = first.length, secondi2 = 0;
+//
+//        for (T aFirst : first) {
+//            while (aFirst.compareTo(second[secondi]) > 0) {
+//                second[secondi2] = second[secondi];
+//                secondi++;
+//                secondi2++;
+//            }
+//            second[secondi2] = aFirst;
+//            secondi2++;
+//        }
     }
 }
