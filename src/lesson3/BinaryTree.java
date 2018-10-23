@@ -169,23 +169,62 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Найти множество всех элементов меньше заданного
      * Сложная
      */
+
+    public T element;
+    public SortedSet<T> sortedSet = new TreeSet<>();
+
+    private void passTroughTree(Node<T> node,boolean numberTask) {
+        int compare = element.compareTo(node.value);
+        if (numberTask) {
+            if (compare > 0) {
+                sortedSet.add(node.value);
+                if (node.left != null) addInfinity(node.left);
+                if (node.right != null) passTroughTree(node.right,true);
+            } else {
+                if (node.left!=null) {
+                    if (compare < 0)
+                        passTroughTree(node.left,true);
+                    else addInfinity(node.left);
+                }
+            }
+        } else {
+            if (compare>0){
+                if (node.right!=null) passTroughTree(node.right,false);
+            } else {
+                sortedSet.add(node.value);
+                if (node.right != null) addInfinity(node.right);
+                if (node.left != null) passTroughTree(node.left,false);
+            }
+
+        }
+    }
+
+    private void addInfinity(Node<T> node) {
+        sortedSet.add(node.value);
+        if (node.right!=null) addInfinity(node.right);
+        if (node.left!=null) addInfinity(node.left);
+    }
+
     @NotNull
     @Override
     public SortedSet<T> headSet(T toElement) {
-        // TODO
-        throw new NotImplementedError();
+        element=toElement;
+        if (root!=null) passTroughTree(root,true);
+        return sortedSet;
     }
 
     /**
      * Найти множество всех элементов больше или равных заданного
      * Сложная
      */
+
     @NotNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
-        // TODO
-        throw new NotImplementedError();
-    }
+            element=fromElement;
+            if (root!=null) passTroughTree(root,false);
+            return sortedSet;
+        }
 
     @Override
     public T first() {
