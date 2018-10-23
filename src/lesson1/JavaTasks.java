@@ -1,5 +1,7 @@
 package lesson1;
 
+import kotlin.NotImplementedError;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,7 +37,7 @@ public class JavaTasks {
      * <p>
      * В случае обнаружения неверного формата файла бросить любое исключение.
      */
-    static public void sortTimes(String inputName, String outputName) throws IOException {
+    static public void sortTimes(String inputName, String outputName) {
 //        BufferedReader reader = new BufferedReader(new FileReader(inputName));
 //        List<Integer> list = new ArrayList<>();
 //        String line;
@@ -73,6 +75,7 @@ public class JavaTasks {
 //            writer.write(h + ":" + m + ":" + s + "\n");
 //        }
 //        writer.close();
+        throw new NotImplementedError();
     }
 
     /**
@@ -213,9 +216,7 @@ public class JavaTasks {
      * 2
      * 2
      */
-    static public void sortSequence(String inputName, String outputName) {
-
-    }
+    static public void sortSequence(String inputName, String outputName) {throw new NotImplementedError(); }
 
     /**
      * Соединить два отсортированных массива в один
@@ -244,5 +245,6 @@ public class JavaTasks {
 //            second[secondi2] = aFirst;
 //            secondi2++;
 //        }
+        throw new NotImplementedError();
     }
 }
