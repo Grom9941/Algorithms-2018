@@ -1,6 +1,5 @@
 package lesson1
 
-import org.junit.Assert
 import java.io.BufferedWriter
 import java.io.File
 import java.lang.IllegalArgumentException
