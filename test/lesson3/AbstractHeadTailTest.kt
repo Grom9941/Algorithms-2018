@@ -5,6 +5,7 @@ import kotlin.test.*
 
 abstract class AbstractHeadTailTest {
     private lateinit var tree: SortedSet<Int>
+    private lateinit var tree2: SortedSet<Int>
 
     protected fun fillTree(empty: SortedSet<Int>) {
         this.tree = empty
@@ -34,7 +35,6 @@ abstract class AbstractHeadTailTest {
         assertEquals(false, set.contains(8))
         assertEquals(false, set.contains(9))
         assertEquals(false, set.contains(10))
-
 
         set = tree.headSet(127)
         for (i in 1..10)

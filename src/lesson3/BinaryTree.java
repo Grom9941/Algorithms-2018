@@ -170,6 +170,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Сложная
      */
 
+    // Трудоемкость O(n)
+    // Ресурсоемкость O(n)
     public T element;
     public SortedSet<T> sortedSet = new TreeSet<>();
 
@@ -218,6 +220,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Сложная
      */
 
+    // Трудоемкость O(n)
+    // Ресурсоемкость O(n)
     @NotNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
