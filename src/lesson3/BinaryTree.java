@@ -64,10 +64,35 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Удаление элемента в дереве
      * Средняя
      */
+
+    // Трудоемкость O(n)
+    // Ресурсоемкость O(n)
     @Override
     public boolean remove(Object o) {
-        // TODO
-        throw new NotImplementedError();
+        if (root==null) return false;
+        removeHelper(root, (T) o);
+        return true;
+    }
+
+    private Node<T> removeHelper(Node<T> node,T o1) {
+        int compare = o1.compareTo(root.value);
+        if (node==null) return null;
+        if (compare>0) removeHelper(node.right,o1);
+         else if (compare<0) removeHelper(node.left,o1);
+             else {
+            if (node.right == null || node.left == null) {
+                if (node.right == null) return node.left;
+                else return node.right;
+            }
+            T minimum = node.right.value;
+            Node<T> nodeMinimum = node.right;
+            while (nodeMinimum.left != null){
+                nodeMinimum = nodeMinimum.left;
+                minimum = nodeMinimum.left.value;
+            }
+            node.right = removeHelper(node.right,minimum);
+        }
+        return node;
     }
 
     @Override
