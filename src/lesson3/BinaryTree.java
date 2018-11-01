@@ -65,33 +65,47 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
      * Средняя
      */
 
+    //n-высота дерева
     // Трудоемкость O(n)
     // Ресурсоемкость O(n)
     @Override
     public boolean remove(Object o) {
         if (root==null) return false;
-        removeHelper(root, (T) o);
+        root=removeHelper(root, (T) o);
+        size--;
         return true;
     }
 
     private Node<T> removeHelper(Node<T> node,T o1) {
-        int compare = o1.compareTo(root.value);
         if (node==null) return null;
-        if (compare>0) removeHelper(node.right,o1);
-         else if (compare<0) removeHelper(node.left,o1);
-             else {
-            if (node.right == null || node.left == null) {
-                if (node.right == null) return node.left;
-                else return node.right;
+
+        int compare = o1.compareTo(node.value);
+
+        if (compare>0) {
+            node.right = removeHelper(node.right, o1);
+        } else if (compare < 0) {
+            node.left = removeHelper(node.left, o1);
+        } else {
+                if (node.right == null || node.left == null) {
+
+                    if (node.right == null) return node.left;
+                    else return node.right;
+
+                } else {
+
+                    Node<T> nodeMinimum = node.right;
+                    while (nodeMinimum.left != null) {          //поиск минимального элемента
+                        nodeMinimum = nodeMinimum.left;
+                    }
+
+                    Node minimum = new Node<>(nodeMinimum.value);
+                    minimum.left = node.left;
+                    minimum.right = node.right;
+                    node = minimum;
+
+                    node.right = removeHelper(node.right, node.value);
+                }
             }
-            T minimum = node.right.value;
-            Node<T> nodeMinimum = node.right;
-            while (nodeMinimum.left != null){
-                nodeMinimum = nodeMinimum.left;
-                minimum = nodeMinimum.left.value;
-            }
-            node.right = removeHelper(node.right,minimum);
-        }
         return node;
     }
 
@@ -133,9 +147,36 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          * Поиск следующего элемента
          * Средняя
          */
+
+        //n-высота дерева
+        // Трудоемкость O(n)
+        // Ресурсоемкость O(n)
         private Node<T> findNext() {
-            // TODO
-            throw new NotImplementedError();
+            Node<T> nodeNext = null;
+
+            if (current != null) {
+
+                Node<T> root1 = root;
+                while (root1 != null) {
+
+                    int compare = root1.value.compareTo(current.value);
+                    if (compare > 0) {
+                        nodeNext = root1;
+                        root1 = root1.left;
+                    } else {
+                        root1 = root1.right;
+                    }
+
+                }
+            } else {
+
+                nodeNext = root;
+                while (nodeNext.left != null) {
+                    nodeNext = nodeNext.left;
+                }
+
+            }
+            return nodeNext;
         }
 
         @Override
@@ -156,8 +197,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
          */
         @Override
         public void remove() {
-            // TODO
-            throw new NotImplementedError();
+            root = removeHelper(root, current.value);
+            size--;
         }
     }
 

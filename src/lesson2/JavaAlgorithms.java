@@ -144,47 +144,54 @@ public class JavaAlgorithms {
     // Ресурсоемкость O(second.length())
     static public String longestCommonSubstring(String first, String second) {
         List<Integer> listfrist = new ArrayList<>();
-        Integer max=0,j1 = null;
-        for (int j=0;j<second.length();j++){
-            if(first.charAt(0)==second.charAt(j)){
-                listfrist.add(j,1);
+        Integer max = 0, j1 = null;
+
+        for (int j = 0; j < second.length(); j++) {
+
+            if (first.charAt(0) == second.charAt(j)) {
+                listfrist.add(j, 1);
             } else {
-                listfrist.add(j,0);
+                listfrist.add(j, 0);
             }
-            if (max<listfrist.get(j)) {
-                max=listfrist.get(j);
-                j1=j;
+
+            if (max < listfrist.get(j)) {
+                max = listfrist.get(j);
+                j1 = j;
             }
         }
-        Integer previous=-1,previushelper;
+        Integer previous = -1, previushelper;
 
-            for (int i=1;i<first.length();i++){
-            for (int j=0;j<second.length();j++){
-                previushelper=listfrist.get(j);
-                if (first.charAt(i)==second.charAt(j)) {
+        for (int i = 1; i < first.length(); i++) {
+            for (int j = 0; j < second.length(); j++) {
+                previushelper = listfrist.get(j);
+
+                if (first.charAt(i) == second.charAt(j)) {
                     if (j != 0) {
                         listfrist.set(j, previous + 1);
                     } else {
                         listfrist.set(0, 0);
                     }
                 } else {
-                    listfrist.set(j,0);
+                    listfrist.set(j, 0);
                 }
-                    previous=previushelper;
-                    if (max<listfrist.get(j)) {
-                        max=listfrist.get(j);
-                        j1=j;
-                    }
+
+                previous = previushelper;
+                if (max < listfrist.get(j)) {
+                    max = listfrist.get(j);
+                    j1 = j;
+                }
             }
         }
-        if (max==0) return "";
-            StringBuilder s = new StringBuilder();
-            Integer k =j1-max+1;
-            while (k<=j1){
-                s.append(second.charAt(k));
-                k++;
-            }
-            return s.toString();
+
+        if (max == 0) return "";
+        StringBuilder s = new StringBuilder();
+        Integer k = j1 - max + 1;
+
+        while (k <= j1) {
+            s.append(second.charAt(k));
+            k++;
+        }
+        return s.toString();
     }
 
     /**

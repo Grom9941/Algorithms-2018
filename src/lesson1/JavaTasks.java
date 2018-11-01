@@ -108,31 +108,32 @@ public class JavaTasks {
     // Трудоемкость O(n*log(n))
     // Ресурсоемкость O(n)
     static public void sortAddresses(String inputName, String outputName) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-        List<String> list = new ArrayList<>();
-        String line;
 
-        while ((line = reader.readLine()) != null) {
-            if (line.split(" ").length != 5 || line.split(" - ").length != 2 ||
-                    !line.split(" ")[4].matches("[+]?\\d+")) throw new IllegalArgumentException();
-
-            list.add(line.split(" - ")[1] + " - " + line.split(" - ")[0]);
-        }
-        reader.close();
-
-        Collections.sort(list);
-
-        for (int i = 0; i < list.size() - 1; i++) {
-            while ((i + 1 <= list.size() - 1) && (list.get(i).split("-")[0].equals(list.get(i + 1).split("-")[0]))) {
-                list.set(i, list.get(i) + "," + list.get(i + 1).split("-")[1]);
-                list.remove(i + 1);
-            }
-        }
-        FileWriter writer = new FileWriter(outputName);
-        for (String i : list) {
-            writer.write(i + "\n");
-        }
-        writer.close();
+//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+//        List<String> list = new ArrayList<>();
+//        String line;
+//
+//        while ((line = reader.readLine()) != null) {
+//            if (line.split(" ").length != 5 || line.split(" - ").length != 2 ||
+//                    !line.split(" ")[4].matches("[+]?\\d+")) throw new IllegalArgumentException();
+//
+//            list.add(line.split(" - ")[1] + " - " + line.split(" - ")[0]);
+//        }
+//        reader.close();
+//
+//        Collections.sort(list);
+//
+//        for (int i = 0; i < list.size() - 1; i++) {
+//            while ((i + 1 <= list.size() - 1) && (list.get(i).split("-")[0].equals(list.get(i + 1).split("-")[0]))) {
+//                list.set(i, list.get(i) + "," + list.get(i + 1).split("-")[1]);
+//                list.remove(i + 1);
+//            }
+//        }
+//        FileWriter writer = new FileWriter(outputName);
+//        for (String i : list) {
+//            writer.write(i + "\n");
+//        }
+//        writer.close();
     }
 
     /**
