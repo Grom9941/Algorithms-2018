@@ -238,46 +238,43 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
 
     // Трудоемкость O(n)
     // Ресурсоемкость O(n)
-    public T element;
-    public SortedSet<T> sortedSet = new TreeSet<>();
-
-    private void passTroughTree(Node<T> node,boolean numberTask) {
-        int compare = element.compareTo(node.value);
+    private void passTroughTree(Node<T> node,boolean numberTask, T toElement, SortedSet<T> sortedSet) {
+        int compare = toElement.compareTo(node.value);
         if (numberTask) {
             if (compare > 0) {
                 sortedSet.add(node.value);
-                if (node.left != null) addInfinity(node.left);
-                if (node.right != null) passTroughTree(node.right,true);
+                if (node.left != null) addInfinity(node.left, sortedSet);
+                if (node.right != null) passTroughTree(node.right,true, toElement, sortedSet);
             } else {
                 if (node.left!=null) {
                     if (compare < 0)
-                        passTroughTree(node.left,true);
-                    else addInfinity(node.left);
+                        passTroughTree(node.left,true, toElement, sortedSet);
+                    else addInfinity(node.left, sortedSet);
                 }
             }
         } else {
             if (compare>0){
-                if (node.right!=null) passTroughTree(node.right,false);
+                if (node.right!=null) passTroughTree(node.right,false, toElement, sortedSet);
             } else {
                 sortedSet.add(node.value);
-                if (node.right != null) addInfinity(node.right);
-                if (node.left != null) passTroughTree(node.left,false);
+                if (node.right != null) addInfinity(node.right, sortedSet);
+                if (node.left != null) passTroughTree(node.left,false, toElement, sortedSet);
             }
 
         }
     }
 
-    private void addInfinity(Node<T> node) {
+    private void addInfinity(Node<T> node, SortedSet<T> sortedSet) {
         sortedSet.add(node.value);
-        if (node.right!=null) addInfinity(node.right);
-        if (node.left!=null) addInfinity(node.left);
+        if (node.right!=null) addInfinity(node.right, sortedSet);
+        if (node.left!=null) addInfinity(node.left, sortedSet);
     }
 
     @NotNull
     @Override
     public SortedSet<T> headSet(T toElement) {
-        element=toElement;
-        if (root!=null) passTroughTree(root,true);
+        SortedSet<T> sortedSet = new TreeSet<>();
+        if (root!=null) passTroughTree(root,true, toElement, sortedSet);
         return sortedSet;
     }
 
@@ -291,8 +288,8 @@ public class BinaryTree<T extends Comparable<T>> extends AbstractSet<T> implemen
     @NotNull
     @Override
     public SortedSet<T> tailSet(T fromElement) {
-            element=fromElement;
-            if (root!=null) passTroughTree(root,false);
+        SortedSet<T> sortedSet = new TreeSet<>();
+            if (root!=null) passTroughTree(root,false, fromElement, sortedSet);
             return sortedSet;
         }
 

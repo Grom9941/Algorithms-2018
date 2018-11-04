@@ -168,6 +168,6 @@ class BinaryTreeTest {
     @Test
     @Tag("Hard")
     fun testIteratorRemoveJava() {
-        testIteratorRemove { createJavaTree() }
+            testIteratorRemove { createJavaTree() }
     }
 }
