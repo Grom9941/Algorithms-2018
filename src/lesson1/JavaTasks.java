@@ -3,9 +3,7 @@ package lesson1;
 import kotlin.NotImplementedError;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @SuppressWarnings("unused")
 public class JavaTasks {
@@ -108,32 +106,35 @@ public class JavaTasks {
     // Трудоемкость O(n*log(n))
     // Ресурсоемкость O(n)
     static public void sortAddresses(String inputName, String outputName) throws IOException {
+        Map<String, List<String>> map = new TreeMap<>();
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        String line;
 
-//        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-//        List<String> list = new ArrayList<>();
-//        String line;
-//
-//        while ((line = reader.readLine()) != null) {
-//            if (line.split(" ").length != 5 || line.split(" - ").length != 2 ||
-//                    !line.split(" ")[4].matches("[+]?\\d+")) throw new IllegalArgumentException();
-//
-//            list.add(line.split(" - ")[1] + " - " + line.split(" - ")[0]);
-//        }
-//        reader.close();
-//
-//        Collections.sort(list);
-//
-//        for (int i = 0; i < list.size() - 1; i++) {
-//            while ((i + 1 <= list.size() - 1) && (list.get(i).split("-")[0].equals(list.get(i + 1).split("-")[0]))) {
-//                list.set(i, list.get(i) + "," + list.get(i + 1).split("-")[1]);
-//                list.remove(i + 1);
-//            }
-//        }
-//        FileWriter writer = new FileWriter(outputName);
-//        for (String i : list) {
-//            writer.write(i + "\n");
-//        }
-//        writer.close();
+        while ((line = reader.readLine()) != null) {
+            String[] strSplit = line.split(" - ");
+            String[] strSplit2 = line.split(" ");
+
+            if (strSplit2.length != 5 || strSplit.length != 2 ||
+                    !strSplit2[4].matches("[+]?\\d+")) throw new IllegalArgumentException();
+
+            if (!map.containsKey(strSplit[1])) {
+                List<String> list = new ArrayList<>();
+                list.add(strSplit[0]);
+                map.put(strSplit[1], list);
+            } else {
+                map.get(strSplit[1]).add(strSplit[0]);
+            }
+        }
+        reader.close();
+
+        FileWriter writer = new FileWriter(outputName);
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            List<String> listValue = entry.getValue();
+            Collections.sort(listValue);
+            writer.write(entry.getKey() + " - " + String.join(", ", listValue) + "\n");
+        }
+        writer.close();
     }
 
     /**
