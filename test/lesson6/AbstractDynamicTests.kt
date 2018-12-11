@@ -6,8 +6,10 @@ abstract class AbstractDynamicTests {
     fun longestCommonSubSequence(longestCommonSubSequence: (String, String) -> String) {
         assertEquals("", longestCommonSubSequence("мой мир", "я"))
         assertEquals("1", longestCommonSubSequence("1", "1"))
+        assertEquals("2391", longestCommonSubSequence("323 910", "923091"))
         assertEquals("13", longestCommonSubSequence("123", "13"))
         assertEquals("здс", longestCommonSubSequence("здравствуй мир", "мы здесь"))
+        assertEquals("GTAB", longestCommonSubSequence("AGGTAB", "GXTXAYB"))
         assertEquals("emt ole", longestCommonSubSequence("nematode knowledge", "empty bottle"))
         assertEquals("e kerwelkkd r", longestCommonSubSequence("oiweijgw kejrhwejelkrw kjhdkfjs hrk", "perhkhk lerkerorwetp lkjklvvd durltr"))
         assertEquals(""" дд саы чтых,
@@ -39,6 +41,9 @@ abstract class AbstractDynamicTests {
         assertEquals(1, shortestPathOnField("input/field_in2.txt"))
         assertEquals(12, shortestPathOnField("input/field_in1.txt"))
         assertEquals(43, shortestPathOnField("input/field_in3.txt"))
+        assertEquals(0, shortestPathOnField("input/field_in4.txt"))
+        assertEquals(23, shortestPathOnField("input/field_in5.txt"))
+        assertEquals(1, shortestPathOnField("input/field_in6.txt"))
     }
 
 }

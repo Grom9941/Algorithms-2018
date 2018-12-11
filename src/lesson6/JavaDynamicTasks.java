@@ -24,20 +24,20 @@ public class JavaDynamicTasks {
     public static String longestCommonSubSequence(String first, String second) {
         int[][] lengths = new int[first.length() + 1][second.length() + 1];
 
-        for (int i = 1; i < first.length() + 1; i++) {
-            for (int j = 1; j < second.length() + 1; j++) {
+        for (int i = 1; i <= first.length(); i++) {
+            for (int j = 1; j <= second.length(); j++) {
                 if (first.charAt(i - 1) == second.charAt(j - 1))
                     lengths[i][j] = lengths[i - 1][j - 1] + 1;
                 else
-                    lengths[i][j] = Math.max(lengths[i][j - 1], lengths[i - 1][j]);
+                    lengths[i][j] = Math.max(lengths[i - 1][j], lengths[i][j - 1]);
             }
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         for (int x = first.length(), y = second.length();
              x != 0 && y != 0; ) {
             if (first.charAt(x - 1) == second.charAt(y - 1)) {
-                sb.append(first.charAt(x - 1));
+                result.append(first.charAt(x - 1));
                 x--;
                 y--;
             } else if (lengths[x][y - 1] > lengths[x - 1][y]) {
@@ -46,7 +46,8 @@ public class JavaDynamicTasks {
                 x--;
             } else x--;
         }
-        return sb.reverse().toString();
+
+        return result.reverse().toString();
     }
 
     /**
@@ -86,14 +87,12 @@ public class JavaDynamicTasks {
      * Здесь ответ 2 + 3 + 4 + 1 + 2 = 12
      */
     public static int shortestPathOnField(String inputName) throws IOException {
-
-        BufferedReader reader = new BufferedReader(new FileReader(inputName));
-
         List<String> array = new ArrayList<>();
         int numberLine = 0;
         String line;
 
-        while ((line=reader.readLine()) != null) {
+        BufferedReader reader = new BufferedReader(new FileReader(inputName));
+        while ((line = reader.readLine()) != null) {
             numberLine++;
             array.add(line);
         }
@@ -101,31 +100,35 @@ public class JavaDynamicTasks {
 
         int numberWeigth = array.get(0).split(" ").length;
         int[][] matrix = new int[numberLine][numberWeigth];
+        numberLine = 0;
 
-        numberLine=0;
-        for (String str: array) {
-                for (int i = 0; i < str.split(" ").length; i++) {
-                    matrix[numberLine][i] = str.charAt(2 * i) - 48;
-                }
-                numberLine++;
+        for (String str : array) {
+            for (int i = 0; i < str.split(" ").length; i++) {
+                matrix[numberLine][i] = str.charAt(2 * i) - 48;
+            }
+            numberLine++;
         }
 
-        int numberTop;int numberLeft;int numberDiagonal;
+        int numberTop;
+        int numberLeft;
+        int numberDiagonal;
         byte trueAll;
 
-        for (int i=0;i<numberLine;i++){
-            for (int j=0;j<numberWeigth;j++){
-                trueAll=0;
-                if (i-1>=0) numberTop= matrix[i-1][j]; else {numberTop=Integer.MAX_VALUE;trueAll++;}
-                if (j-1>=0) numberLeft= matrix[i][j-1]; else {numberLeft=Integer.MAX_VALUE;trueAll++;}
-                if (i-1>=0 && j-1>=0) numberDiagonal= matrix[i-1][j-1]; else {numberDiagonal=Integer.MAX_VALUE;trueAll++;}
+        for (int i = 0; i < numberLine; i++) {
+            for (int j = 0; j < numberWeigth; j++) {
+                trueAll = 0;
 
-                if (trueAll!=3) {
+                if (i-1>=0) numberTop=matrix[i-1][j]; else {numberTop=Integer.MAX_VALUE;trueAll++;}
+                if (j-1>=0) numberLeft=matrix[i][j-1]; else {numberLeft=Integer.MAX_VALUE;trueAll++;}
+                if (i-1>=0 && j-1>=0) numberDiagonal=matrix[i-1][j-1]; else {numberDiagonal=Integer.MAX_VALUE;trueAll++;}
+
+                if (trueAll != 3) {
                     matrix[i][j] = matrix[i][j] + Math.min(Math.min(numberTop, numberLeft), numberDiagonal);
                 }
             }
         }
-        return matrix[numberLine-1][numberWeigth-1];
+
+        return matrix[numberLine - 1][numberWeigth - 1];
     }
 
     // Задачу "Максимальное независимое множество вершин в графе без циклов"
